@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ajax</title>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+    <script>
+        const corsProxy = 'https://stormy-lake-41586.herokuapp.com/';
+
+        function postData() {
+            // Creating the XMLHttpRequest object
+            const request = new XMLHttpRequest();
+
+            // Instantiating the request object
+            request.open("POST", `${corsProxy}https://1kdigital.com/packages.php`);
+
+            console.log(request)
+            // Defining event listener for readystatechange event
+            request.onreadystatechange = function () {
+                // Check if the request is compete and was successful
+                if (this.readyState === 4 && this.status === 200) {
+                    // Inserting the response from server into an HTML element
+                    document.getElementById("result").innerHTML = this.responseText;
+                    console.log(this.responseText)
+                }
+            };
+            
+            // Retrieving the form data
+            const myForm = document.getElementById("myForm");
+            const formData = new FormData(myForm);
+
+            console.log(formData)
+
+            // Sending the request to the server
+            request.send(formData);
+        }
+
+
+
+        function getData() {
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", `${corsProxy}https://1kdigital.com/packages.php?list`, false); // false for synchronous request
+            xmlHttp.send(null);
+            document.getElementById("result").innerHTML = xmlHttp.responseText;
+
+            console.log(xmlHttp.responseText);
+            console.log(JSON.parse(xmlHttp.responseText));
+        }
+
+        function getDataById() {
+            const ID = document.getElementById("myNumber").value;
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", `${corsProxy}https://1kdigital.com/packages.php?id=${ID}`, false); // false for synchronous request
+            xmlHttp.send(null);
+            // document.getElementById("result").innerHTML = xmlHttp.responseText;
+            console.log(JSON.parse(xmlHttp.responseText));
+            document.getElementById("result").innerHTML = xmlHttp.responseText;
+        }
+
+        function removeDataById() {
+            const ID = document.getElementById("removeNumber").value;
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", `${corsProxy}https://1kdigital.com/packages.php?remove=${ID}`, false); // false for synchronous request
+            xmlHttp.send(null);
+            // document.getElementById("result").innerHTML = xmlHttp.responseText;
+            console.log(xmlHttp.responseText);
+            document.getElementById("result").innerHTML = xmlHttp.responseText;
+        }
+
+        function changeData() {
+            // Creating the XMLHttpRequest object
+            const request = new XMLHttpRequest();
+
+            // Instantiating the request object
+            request.open("POST", `${corsProxy}https://1kdigital.com/packages.php`);
+
+            console.log(request)
+            // Defining event listener for readystatechange event
+            request.onreadystatechange = function () {
+                // Check if the request is compete and was successful
+                if (this.readyState === 4 && this.status === 200) {
+                    // Inserting the response from server into an HTML element
+                    document.getElementById("result2").innerHTML = this.responseText;
+                    console.log(this.responseText)
+                }
+            };
+
+            // Retrieving the form data
+            const myForm = document.getElementById("myForm2");
+            const formData = new FormData(myForm);
+
+            console.log(formData)
+
+            // Sending the request to the server
+            request.send(formData);
+        }
+
+        
+    </script>
+</head>
+
+<body>
+    <form id="myForm">
+        <label>name:</label>
+        <div><input name="name" type="text" value="Pakett 1"></div>
+        <label>description:</label>
+        <div><input type="text" name="description" value="Integer faucibus blandit eros, id iaculis erat"></div>
+        <label>price:</label>
+        <div><input type="text" name="price" value="99 €"></div>
+        <label>class:</label>
+        <div><input type="text" name="class" value="1"></div>
+
+        <p><button type="button" onclick="postData()">Post</button></p>
+        <p><button type="button" onclick="getData()">Get</button></p>
+        <br>
+        <p><input type="number" id="myNumber" value="1"><button type="button" onclick="getDataById()">Get by ID</button></p>
+        <br>
+        <p><input type="number" id="removeNumber" value="1"><button type="button" onclick="removeDataById()">Remove by ID</button></p>
+    </form>
+    <div id="result">
+        <p>Content of the result DIV box will be replaced by the server response</p>
+    </div>
+
+
+    <br><br>
+    <form id="myForm2">
+        <label>id:</label>
+        <div><input name="id" type="text" value="1"></div>
+        <label>name:</label>
+        <div><input name="name" type="text" value="Pakett 3"></div>
+        <label>description:</label>
+        <div><input type="text" name="description" value="Integer faucibus blandit eros, id iaculis erat"></div>
+        <label>price:</label>
+        <div><input type="text" name="price" value="199 €"></div>
+        <label>class:</label>
+        <div><input type="text" name="class" value="2"></div>
+        <p><button type="button" onclick="changeData()">Change</button></p>
+    </form>
+    <div id="result2">
+        <p>Content of the result DIV box will be replaced by the server response</p>
+    </div>
+</body>
+
+
+</html>
